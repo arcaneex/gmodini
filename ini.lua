@@ -114,15 +114,9 @@ function ini.write(name,tbl)
 			if type(v) == 'Vector' then
 				
 				append = ('Vector(%i,%i,%i)'):format(v.x,v.y,v.z)
-			elseif type(v) == 'Color' then
-				
-				if v.a then
-					
-					append = ('Color(%i,%i,%i,%i)'):format(v.r,v.g,v.b,v.a)
-				else
+			elseif type(v) == 'table' and v.r and v.g and v.b then
 
-					append = ('Color(%i,%i,%i'):format(v.r,v.g,v.b)
-				end
+					append = ('Color(%i,%i,%i,%i)'):format(v.r,v.g,v.b,v.a or 255)
 			elseif type(v) == 'Angle' then
 
 				append = ('Angle(%i,%i,%i)'):format(v.p,v.y,v.r)
