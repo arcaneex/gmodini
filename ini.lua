@@ -4,7 +4,7 @@ function ini.magicLines(str)
 
 	if str:sub(-1) ~= '\n' then str = str.."\n" end
 
-	--this is a very weird fix I don't know why 13 fucks up the patterns
+	--this is a very weird fix I don't know why 13 fucks up the patterns I think it's \r idk too lazy to fix
 	for i=1,#str do
 		if string.byte(str:sub(i,i)) == 13 then
 			str = str:sub(1,i-1) .. str:sub(i+1,#str)
@@ -106,13 +106,32 @@ function ini.write(name,tbl)
 
 	for section, param in pairs(tbl) do
 		
-		content = content..('[%s]\n'):format(section)
+		content = content..('[%s]\r\n'):format(section)
 
 		for k, v in pairs(param) do
 			
-			content = content..('%s=%s\n'):format(k,tostring(v))
+			local append = tostring(v)
+
+			if type(v) == 'Vector' then
+				
+				append = ('Vector(%i,%i,%i)'):format(v.x,v.y,v.z)
+			elseif type(v) == 'Color' then
+				
+				if v.a then
+					
+					append = ('Color(%i,%i,%i,%i)'):format(v.r,v.g,v.b,v.a)
+				else
+
+					append = ('Color(%i,%i,%i'):format(v.r,v.g,v.b)
+				end
+			elseif type(v) == 'Angle' then
+
+				append = ('Angle(%i,%i,%i)'):format(v.p,v.y,v.r)
+			end
+			
+			content = content..('%s=%s\r\n'):format(k,append)
 		end
-		content = content..'\n'
+		content = content..'\r\n'
 	end
 
 	file.Write(name..'.txt',content)
