@@ -135,15 +135,3 @@ function ini.write(name,tbl)
 
 	file.Write(name..'.txt',content)
 end
-
-local data = {}
-data.owner = {}
-data.owner.name = 'Scarness'
-data.owner.pos = Vector(1,1,1)
-data.owner.color = Color(213,51,51)
-
-data.admin = {}
-data.admin.name = 'Ray'
-data.admin.angle = Angle(123,51,1)
-
-ini.write('admins',data)
