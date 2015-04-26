@@ -42,14 +42,14 @@ function ini.read(path)
 			local digits = val:gmatch("%d+")
 
 			local vars = {}
-			local letter = 'w'
+			local k = 1
 			for digit in digits do
 				
-				vars[letter] = tonumber(digit)
-				letter = letter == 'w' and 'x' or letter == 'x' and 'y' or 'z'
+				vars[k] = tonumber(digit)
+				k = k+1
 			end
 
-			local w,x,y,z = vars.w,vars.x,vars.y,vars.z
+			local w,x,y,z = unpack(vars)
 
 			if w and x and y and z then
 
@@ -76,7 +76,6 @@ function ini.read(path)
 				
 				local var = val:sub(2,#val-1)
 
-				print(var)
 				if _G[var] then
 					
 					val = _G[var]
@@ -136,3 +135,15 @@ function ini.write(name,tbl)
 
 	file.Write(name..'.txt',content)
 end
+
+local data = {}
+data.owner = {}
+data.owner.name = 'Scarness'
+data.owner.pos = Vector(1,1,1)
+data.owner.color = Color(213,51,51)
+
+data.admin = {}
+data.admin.name = 'Ray'
+data.admin.angle = Angle(123,51,1)
+
+ini.write('admins',data)
