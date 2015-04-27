@@ -82,6 +82,9 @@ function ini.read(path)
 				end
 
 
+			else
+
+				val = val:sub(2,#val-1)
 			end
 
 			if tonumber(param) then
@@ -120,6 +123,9 @@ function ini.write(name,tbl)
 			elseif type(v) == 'Angle' then
 
 				append = ('Angle(%i,%i,%i)'):format(v.p,v.y,v.r)
+			else
+
+				append = '"'..v..'"'
 			end
 			
 			content = content..('%s=%s\r\n'):format(k,append)
