@@ -43,6 +43,7 @@ function ini.read(path)
 
 			local vars = {}
 			local k = 1
+
 			for digit in digits do
 				
 				vars[k] = tonumber(digit)
@@ -72,16 +73,6 @@ function ini.read(path)
 			elseif val == 'false' then
 				
 				val = false
-			elseif val:sub(1,1) == '%' and val:sub(-1) == '%' then
-				
-				local var = val:sub(2,#val-1)
-
-				if _G[var] then
-					
-					val = _G[var]
-				end
-
-
 			else
 
 				val = val:sub(2,#val-1)
